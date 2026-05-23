@@ -298,7 +298,7 @@ document.getElementById('btn-cerrar-carrito').addEventListener('click', cerrarMo
 document.getElementById('btn-enviar-whatsapp').addEventListener('click', () => {
     if (carrito.length === 0) return alert("Por favor, sume algún artículo a su pedido antes de enviar.");
     
-    let mensaje = "¡Hola Tía! Quisiera consultar y coordinar el pago/envío para el siguiente pedido de su catálogo online:\n\n";
+    let mensaje = "Hola! Quisiera coordinar el pago y envío para el siguiente pedido de su catálogo online:\n\n";
     let total = 0;
     
     carrito.forEach(item => {
@@ -308,7 +308,7 @@ document.getElementById('btn-enviar-whatsapp').addEventListener('click', () => {
     });
     
     const formatTotal = new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS', maximumFractionDigits: 0 }).format(total);
-    mensaje += `*Total estimado: ${formatTotal}*\n\nMuchas gracias. ¡Quedo a la espera de su respuesta!`;
+    mensaje += `*Total estimado: ${formatTotal}*\n`;
     
     const mensajeCodificado = encodeURIComponent(mensaje);
     window.open(`https://wa.me/${NUMERO_WA}?text=${mensajeCodificado}`, '_blank');
