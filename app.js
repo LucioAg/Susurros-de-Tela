@@ -19,7 +19,8 @@ async function cargarProductos() {
 
         for (let i = 1; i < filas.length; i++) {
             if (!filas[i].trim()) continue;
-            const columnas = filas[i].split(',');
+            // Corrección: Ahora lee las comas correctamente sin cortar los textos con comillas
+            const columnas = filas[i].split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
             
             // --- Carga de imágenes ---
             let linkImagen = columnas[4] ? columnas[4].trim() : ""; 
@@ -35,8 +36,9 @@ async function cargarProductos() {
             }
 
             // --- Lectura de Identidad/Chamuyo (Columna I -> Índice 8) ---
+            // Solo guarda el primer texto válido que encuentre
             if (columnas.length > 8 && textoChamuyo === "") {
-                let chamuyoCelda = columnas[8] ? columnas[8].trim().replace(/^"|"$/g, '') : "";
+                let chamuyoCelda = columnas[8].trim().replace(/^"|"$/g, '');
                 if (chamuyoCelda && chamuyoCelda.toLowerCase() !== "chamuyo") {
                     textoChamuyo = chamuyoCelda;
                 }
@@ -63,13 +65,13 @@ async function cargarProductos() {
         document.getElementById('loader').classList.add('hidden');
         
         iniciarRotacionPromos();
-        mostrarIdentidadChamuyo();
+        mostrarIdentidadChamuyo(); // Llamamos a la función que muestra el texto
         dibujarFiltros();
         dibujarTarjetas();
 
     } catch (error) {
         console.error("Error:", error);
-        document.getElementById('loader').innerText = "Lo sentimos, hubo un inconveniente al cargar el catálogo.";
+        document.getElementById('loader').innerText = "Lo sentimos, hubo un inconveniente al cargar el catálogo. Por favor, intente recargar la página.";
     }
 }
 
@@ -81,13 +83,16 @@ function mostrarIdentidadChamuyo() {
     const btnToggle = document.getElementById('btn-toggle-identidad');
     const fadeContenedor = document.getElementById('fade-identidad');
 
+    // Si hay un texto en la columna I, lo mostramos
     if (textoChamuyo) {
         contenidoIdentidad.innerText = textoChamuyo;
         seccionIdentidad.classList.remove('hidden');
 
+        // Un pequeño retraso para que el navegador calcule bien la altura del texto
         setTimeout(() => {
+            // Si el texto es muy cortito (menos de 85px), ocultamos el botón de "Leer más" y el difuminado
             if (textoContenedor.scrollHeight <= 85) {
-                btnToggle.classList.add('hidden');
+                btnToggle.parentElement.classList.add('hidden'); // Oculta también el div contenedor del botón
                 fadeContenedor.classList.add('hidden');
                 textoContenedor.style.maxHeight = "none";
             }
@@ -117,7 +122,7 @@ if (btnToggleIdentidad) {
             textoContenedor.style.maxHeight = "80px";
             fadeContenedor.classList.remove('opacity-0');
             iconoToggle.classList.remove('rotate-180');
-            spanToggle.innerText = "Leer historia completa";
+            spanToggle.innerText = "Leer más";
         }
     });
 }
@@ -165,6 +170,7 @@ function dibujarFiltros() {
 
     categoriasUnicas.forEach(catId => {
         const isActive = categoriaActual === catId;
+        
         const clasesBoton = isActive 
             ? "bg-dorado text-white border-dorado shadow-md font-medium" 
             : "bg-white text-nude-900 border-nude-100 hover:border-dorado hover:text-dorado hover:bg-nude-50 font-light";
@@ -282,7 +288,7 @@ function actualizarUI() {
     let totalApagar = 0;
 
     if (carrito.length === 0) {
-        contenedorItems.innerHTML = '<p class="text-center text-nude-800 mt-16 text-sm md:text-base font-light">Tu pedido está esperando que elijas algo hermoso.</p>';
+        contenedorItems.innerHTML = '<p class="text-center text-nude-800 mt-10 md:mt-16 text-sm md:text-base font-light">Tu pedido está esperando que elijas algo hermoso.</p>';
     } else {
         contenedorItems.innerHTML = '';
         carrito.forEach(item => {
@@ -298,9 +304,9 @@ function actualizarUI() {
                         <p class="text-dorado font-bold text-sm md:text-base mt-0.5 md:mt-1">${format(subtotal)}</p>
                     </div>
                     <div class="flex items-center gap-1 md:gap-2 bg-white rounded md:rounded-lg p-1 border border-nude-100">
-                        <button onclick="cambiarCantidad('${item.id}', -1)" class="w-6 h-6 md:w-7 md:h-7 flex items-center justify-center bg-nude-100 text-nude-900 rounded md:hover:bg-dorado md:hover:text-white font-bold text-base md:text-lg">-</button>
+                        <button onclick="cambiarCantidad('${item.id}', -1)" class="w-6 h-6 md:w-7 md:h-7 flex items-center justify-center bg-nude-100 text-nude-900 rounded hover:bg-dorado hover:text-white font-bold text-base md:text-lg">-</button>
                         <span class="text-sm md:text-lg font-semibold w-4 md:w-5 text-center text-nude-900">${item.cantidad}</span>
-                        <button onclick="cambiarCantidad('${item.id}', 1)" class="w-6 h-6 md:w-7 md:h-7 flex items-center justify-center bg-nude-100 text-nude-900 rounded md:hover:bg-dorado md:hover:text-white font-bold text-base md:text-lg">+</button>
+                        <button onclick="cambiarCantidad('${item.id}', 1)" class="w-6 h-6 md:w-7 md:h-7 flex items-center justify-center bg-nude-100 text-nude-900 rounded hover:bg-dorado hover:text-white font-bold text-base md:text-lg">+</button>
                     </div>
                 </div>
             `;
