@@ -1,85 +1,67 @@
 <!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Susurros de Tela - Catálogo Exclusivo</title>
-    
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;1,600;1,700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
-    
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Poppins', 'sans-serif'],
-                        serif: ['Playfair Display', 'serif'],
-                    },
-                    colors: {
-                        nude: {
-                            50: '#fdfcfb',
-                            100: '#f2eae4',
-                            200: '#e5d9d0',
-                            800: '#755c4d',
-                            900: '#4a3b31',
-                        },
-                        dorado: {
-                            DEFAULT: '#cda683', 
-                            hover: '#b38a66',
-                        }
-                    },
-                    boxShadow: {
-                        'premium': '0 10px 40px -10px rgba(74, 59, 49, 0.15)',
-                    }
-                }
-            }
-        }
-    </script>
-    <style>
-        * { transition: all 0.3s ease-out; }
-        .hide-scrollbar::-webkit-scrollbar { display: none; }
-    </style>
-</head>
-<body class="bg-nude-50 text-nude-900 font-sans antialiased flex flex-col min-h-screen">
+                                rounded-3xl
+                                px-6 py-5
+                                shadow-inner"
+                         style="max-height: 110px;">
 
-    <header class="bg-nude-900 border-b-2 border-dorado sticky top-0 z-50 shadow-premium">
-        <div class="max-w-7xl mx-auto px-4 py-6 flex justify-between items-center">
-            <h1 class="text-3xl font-serif text-white italic font-bold tracking-wider">Susurros de Tela</h1>
-            <button id="btn-abrir-carrito" class="bg-dorado text-white px-6 py-2 rounded-full font-bold hover:bg-white hover:text-dorado shadow-lg flex items-center gap-2">
-                🛍️ <span id="contador-carrito">0</span>
-            </button>
-        </div>
-    </header>
-    
-    <main class="max-w-[1500px] mx-auto p-4 md:p-6 mt-4 mb-16 flex-1 w-full">
-        
-        <div id="seccion-identidad" class="max-w-3xl mx-auto mb-8 hidden">
-            <div class="bg-white rounded-2xl shadow-premium border-2 border-dorado/20 p-8 md:p-10 relative text-center">
-                <span class="text-dorado/30 text-6xl font-serif absolute top-2 left-6">"</span>
-                
-                <h2 class="text-2xl font-serif text-nude-900 mb-4 font-bold tracking-wide">Nuestra Esencia</h2>
-                
-                <div id="texto-identidad" class="relative overflow-hidden transition-all duration-500 ease-in-out" style="max-height: 80px;">
-                    <p id="texto-identidad-contenido" class="text-nude-800 font-medium text-sm md:text-base leading-relaxed px-4 pb-4 italic">
+                        <p id="texto-identidad-contenido" class="text-nude-800 font-light text-sm md:text-base leading-relaxed italic">
                         </p>
-                    <div id="fade-identidad" class="absolute bottom-0 left-0 w-full h-12 bg-gradient-to-t from-white to-transparent transition-opacity duration-300"></div>
+
+                        <div id="fade-identidad"
+                             class="absolute bottom-0 left-0 w-full h-20
+                                    bg-gradient-to-t
+                                    from-[#fffaf6]
+                                    via-[#fffaf6]/90
+                                    to-transparent
+                                    pointer-events-none transition-opacity duration-300">
+                        </div>
+                    </div>
+                    
+                    <button id="btn-toggle-identidad"
+                            class="mt-6 mx-auto
+                                   bg-dorado hover:bg-dorado-hover
+                                   text-white
+                                   font-semibold
+                                   text-sm md:text-base
+                                   px-7 py-3
+                                   rounded-full
+                                   shadow-lg hover:shadow-xl
+                                   transition-all duration-300
+                                   inline-flex items-center justify-center gap-3
+                                   border border-white/40">
+
+                        <span id="span-toggle-identidad">
+                            ✨ Leer nuestra historia completa
+                        </span>
+
+                        <svg id="icono-toggle-identidad"
+                             xmlns="http://www.w3.org/2000/svg"
+                             class="h-5 w-5 transition-transform duration-300"
+                             fill="none"
+                             viewBox="0 0 24 24"
+                             stroke="currentColor">
+
+                            <path stroke-linecap="round"
+                                  stroke-linejoin="round"
+                                  stroke-width="2.5"
+                                  d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </button>
                 </div>
-                
-                <button id="btn-toggle-identidad" class="mt-2 bg-nude-50 px-6 py-2 rounded-full border border-dorado text-dorado hover:bg-dorado hover:text-white font-bold text-xs uppercase tracking-widest inline-flex items-center justify-center gap-2 shadow-sm transition-all">
-                    <span id="span-toggle-identidad">Leer historia completa</span>
-                    <svg id="icono-toggle-identidad" xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
-                </button>
             </div>
         </div>
 
-        <div class="relative w-full max-w-2xl mx-auto mb-8">
-            <input type="text" id="input-buscador" placeholder="Buscar productos..."
-                   class="w-full pl-12 pr-4 py-4 rounded-full border-2 border-nude-100 focus:outline-none focus:border-dorado shadow-sm bg-white">
-            <span class="absolute left-5 top-1/2 transform -translate-y-1/2">🔍</span>
+        <div class="relative w-full max-w-2xl mx-auto mb-6 md:mb-8 mt-2">
+            <input type="text" id="input-buscador" placeholder="Buscar... (ej: Queen, Funda floral)"
+                   class="w-full pl-10 md:pl-14 pr-4 md:pr-6 py-2 md:py-4 rounded-full border-2 border-nude-100 focus:outline-none focus:border-dorado focus:ring-4 focus:ring-dorado/10 shadow-sm md:shadow-premium text-nude-900 transition-all text-xs md:text-base placeholder:text-nude-800/50 placeholder:font-normal bg-white">
+            <span class="absolute left-4 md:left-5 top-1/2 transform -translate-y-1/2 text-sm md:text-xl opacity-60">🔍</span>
         </div>
 
-        <div id="grilla-productos" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"></div>
+        <div id="contenedor-filtros" class="flex overflow-x-auto gap-2 md:gap-3 pb-3 md:pb-4 mb-4 md:mb-6 hide-scrollbar justify-start md:justify-center"></div>
+
+        <div id="loader" class="text-center text-nude-800 py-12 font-medium animate-pulse text-sm md:text-lg">Preparando la colección exclusiva...</div>
+        
+        <div id="grilla-productos" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-8"></div>
     </main>
 
     <script src="app.js"></script>
