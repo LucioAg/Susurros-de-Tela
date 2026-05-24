@@ -1,6 +1,3 @@
-# index.html (COMPLETO)
-
-```html
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -33,9 +30,7 @@
                         }
                     },
                     boxShadow: {
-                        'premium': '0 10px 40px -10px rgba(74, 59, 49, 0.1)',
-                        'premium-hover': '0 20px 50px -15px rgba(74, 59, 49, 0.15)',
-                        'soft': '0 8px 25px rgba(205,166,131,0.18)',
+                        'premium': '0 10px 40px -10px rgba(74, 59, 49, 0.15)',
                     }
                 }
             }
@@ -43,436 +38,50 @@
     </script>
     <style>
         * { transition: all 0.3s ease-out; }
-
-        body {
-            background:
-                radial-gradient(circle at top left, rgba(255,255,255,0.9), transparent 35%),
-                linear-gradient(to bottom, #fdfcfb, #f8f3ef);
-        }
-
-        .animate-slide-in { animation: slideIn 0.3s ease-out forwards; }
-        @keyframes slideIn { 
-            from { transform: translateX(100%); } 
-            to { transform: translateX(0); } 
-        }
-
-        .animate-fade-in { animation: fadeIn 0.3s ease-out forwards; }
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
         .hide-scrollbar::-webkit-scrollbar { display: none; }
-        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-
-        #img-zoom {
-            max-height: 90vh;
-            max-width: 90vw;
-        }
-
-        .glass-card {
-            backdrop-filter: blur(10px);
-        }
     </style>
 </head>
-<body class="bg-nude-50 text-nude-900 font-sans antialiased flex flex-col min-h-screen leading-relaxed">
+<body class="bg-nude-50 text-nude-900 font-sans antialiased flex flex-col min-h-screen">
 
-    <div class="sticky top-0 z-50 flex flex-col shadow-premium">
-        
-        <div id="contenedor-promos" class="bg-dorado text-white text-center py-1.5 md:py-2 px-2 md:px-4 text-xs md:text-sm font-medium tracking-wide hidden">
-            ✨ <span id="texto-promo" class="transition-opacity duration-300">Cargando promociones...</span> ✨
+    <header class="bg-nude-900 border-b-2 border-dorado sticky top-0 z-50 shadow-premium">
+        <div class="max-w-7xl mx-auto px-4 py-6 flex justify-between items-center">
+            <h1 class="text-3xl font-serif text-white italic font-bold tracking-wider">Susurros de Tela</h1>
+            <button id="btn-abrir-carrito" class="bg-dorado text-white px-6 py-2 rounded-full font-bold hover:bg-white hover:text-dorado shadow-lg flex items-center gap-2">
+                🛍️ <span id="contador-carrito">0</span>
+            </button>
         </div>
-
-        <header class="bg-nude-900 border-b-2 border-dorado relative">
-            <div class="max-w-7xl mx-auto px-4 py-3.5 md:py-6 lg:py-8 flex justify-between md:justify-center items-center relative min-h-[60px] md:min-h-[100px]">
-                <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-serif text-white tracking-wider text-left md:text-center md:w-full pr-3 md:px-20 lg:px-40 leading-tight font-bold italic flex-1">
-                    Susurros de Tela
-                </h1>
-                <button id="btn-abrir-carrito" class="relative md:absolute right-0 md:right-8 bg-dorado text-white px-3.5 md:px-6 py-2 md:py-3 rounded-full font-bold hover:bg-white hover:text-dorado transition-all shadow-lg flex items-center gap-1.5 md:gap-3 text-xs md:text-base border-2 border-transparent hover:border-dorado flex-shrink-0">
-                    <span class="text-base md:text-xl">🛍️</span>
-                    <span class="hidden sm:inline font-medium">Mi Pedido</span>
-                    <span id="contador-carrito" class="bg-white text-nude-900 rounded-full w-5 h-5 md:w-6 md:h-6 flex items-center justify-center text-[10px] md:text-sm font-bold shadow-inner">0</span>
+    </header>
+    
+    <main class="max-w-[1500px] mx-auto p-4 md:p-6 mt-4 mb-16 flex-1 w-full">
+        
+        <div id="seccion-identidad" class="max-w-3xl mx-auto mb-8 hidden">
+            <div class="bg-white rounded-2xl shadow-premium border-2 border-dorado/20 p-8 md:p-10 relative text-center">
+                <span class="text-dorado/30 text-6xl font-serif absolute top-2 left-6">"</span>
+                
+                <h2 class="text-2xl font-serif text-nude-900 mb-4 font-bold tracking-wide">Nuestra Esencia</h2>
+                
+                <div id="texto-identidad" class="relative overflow-hidden transition-all duration-500 ease-in-out" style="max-height: 80px;">
+                    <p id="texto-identidad-contenido" class="text-nude-800 font-medium text-sm md:text-base leading-relaxed px-4 pb-4 italic">
+                        </p>
+                    <div id="fade-identidad" class="absolute bottom-0 left-0 w-full h-12 bg-gradient-to-t from-white to-transparent transition-opacity duration-300"></div>
+                </div>
+                
+                <button id="btn-toggle-identidad" class="mt-2 bg-nude-50 px-6 py-2 rounded-full border border-dorado text-dorado hover:bg-dorado hover:text-white font-bold text-xs uppercase tracking-widest inline-flex items-center justify-center gap-2 shadow-sm transition-all">
+                    <span id="span-toggle-identidad">Leer historia completa</span>
+                    <svg id="icono-toggle-identidad" xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
                 </button>
             </div>
-        </header>
-
-    </div> 
-    
-    <main class="max-w-[1500px] mx-auto p-4 md:p-6 mt-2 md:mt-4 mb-16 flex-1 w-full">
-        
-        <div id="seccion-identidad" class="max-w-4xl mx-auto mb-10 hidden">
-
-            <div class="bg-gradient-to-br from-[#fffdfb] via-[#fcf7f2] to-[#f4e8de]
-                        rounded-[32px]
-                        border-2 border-[#ead8ca]
-                        shadow-soft
-                        relative
-                        overflow-hidden">
-
-                <div class="absolute inset-0 opacity-40 pointer-events-none">
-                    <div class="absolute -top-10 -left-10 w-40 h-40 bg-white rounded-full blur-3xl"></div>
-                    <div class="absolute bottom-0 right-0 w-52 h-52 bg-[#f7e9dd] rounded-full blur-3xl"></div>
-                </div>
-
-                <div class="relative z-10 p-7 md:p-12 text-center">
-
-                    <div class="flex justify-center mb-4">
-                        <div class="w-16 h-[2px] bg-dorado rounded-full"></div>
-                    </div>
-
-                    <span class="text-[#dbc6b7] text-7xl leading-none font-serif absolute top-4 left-6 select-none">"</span>
-                    
-                    <h2 class="text-2xl md:text-4xl font-serif text-nude-900 mb-5 font-semibold tracking-wide">
-                        Nuestra Esencia
-                    </h2>
-                    
-                    <div id="texto-identidad"
-                         class="relative overflow-hidden transition-all duration-700 ease-in-out
-                                bg-white/70 glass-card
-                                border border-[#ead8ca]
-                                rounded-3xl
-                                px-6 py-5
-                                shadow-inner"
-                         style="max-height: 110px;">
-
-                        <p id="texto-identidad-contenido" class="text-nude-800 font-light text-sm md:text-base leading-relaxed italic">
-                        </p>
-
-                        <div id="fade-identidad"
-                             class="absolute bottom-0 left-0 w-full h-20
-                                    bg-gradient-to-t
-                                    from-[#fffaf6]
-                                    via-[#fffaf6]/90
-                                    to-transparent
-                                    pointer-events-none transition-opacity duration-300">
-                        </div>
-                    </div>
-                    
-                    <button id="btn-toggle-identidad"
-                            class="mt-6 mx-auto
-                                   bg-dorado hover:bg-dorado-hover
-                                   text-white
-                                   font-semibold
-                                   text-sm md:text-base
-                                   px-7 py-3
-                                   rounded-full
-                                   shadow-lg hover:shadow-xl
-                                   transition-all duration-300
-                                   inline-flex items-center justify-center gap-3
-                                   border border-white/40">
-
-                        <span id="span-toggle-identidad">
-                            ✨ Leer nuestra historia completa
-                        </span>
-
-                        <svg id="icono-toggle-identidad"
-                             xmlns="http://www.w3.org/2000/svg"
-                             class="h-5 w-5 transition-transform duration-300"
-                             fill="none"
-                             viewBox="0 0 24 24"
-                             stroke="currentColor">
-
-                            <path stroke-linecap="round"
-                                  stroke-linejoin="round"
-                                  stroke-width="2.5"
-                                  d="M19 9l-7 7-7-7" />
-                        </svg>
-                    </button>
-                </div>
-            </div>
         </div>
 
-        <div class="relative w-full max-w-2xl mx-auto mb-6 md:mb-8 mt-2">
-            <input type="text" id="input-buscador" placeholder="Buscar... (ej: Queen, Funda floral)"
-                   class="w-full pl-10 md:pl-14 pr-4 md:pr-6 py-2 md:py-4 rounded-full border-2 border-nude-100 focus:outline-none focus:border-dorado focus:ring-4 focus:ring-dorado/10 shadow-sm md:shadow-premium text-nude-900 transition-all text-xs md:text-base placeholder:text-nude-800/50 placeholder:font-normal bg-white">
-            <span class="absolute left-4 md:left-5 top-1/2 transform -translate-y-1/2 text-sm md:text-xl opacity-60">🔍</span>
+        <div class="relative w-full max-w-2xl mx-auto mb-8">
+            <input type="text" id="input-buscador" placeholder="Buscar productos..."
+                   class="w-full pl-12 pr-4 py-4 rounded-full border-2 border-nude-100 focus:outline-none focus:border-dorado shadow-sm bg-white">
+            <span class="absolute left-5 top-1/2 transform -translate-y-1/2">🔍</span>
         </div>
 
-        <div id="contenedor-filtros" class="flex overflow-x-auto gap-2 md:gap-3 pb-3 md:pb-4 mb-4 md:mb-6 hide-scrollbar justify-start md:justify-center"></div>
-
-        <div id="loader" class="text-center text-nude-800 py-12 font-medium animate-pulse text-sm md:text-lg">Preparando la colección exclusiva...</div>
-        
-        <div id="grilla-productos" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-8"></div>
+        <div id="grilla-productos" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"></div>
     </main>
 
     <script src="app.js"></script>
 </body>
 </html>
-```
-
----
-
-# app.js (COMPLETO)
-
-```javascript
-// --- CONFIGURACIÓN ---
-const HOJA_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vT113teW7diuTt-73DS0d4FLPkBI1bPMBDuzSPLT1-dBmbiM-jVIqG3NXc_CEoh0CHoXQ7jcQel7cXt/pub?output=csv";
-const NUMERO_WA = "5492604501034";
-
-// --- ESTADO GLOBAL ---
-let productos = [];
-let carrito = [];
-let categoriaActual = 'TODAS';
-let busquedaActual = '';
-let promocionesActivas = [];
-let textoChamuyo = "";
-
-// --- CARGA DE DATOS ---
-async function cargarProductos() {
-    try {
-        const respuesta = await fetch(HOJA_CSV_URL);
-        const textoCsv = await respuesta.text();
-        const filas = textoCsv.split('\n');
-
-        for (let i = 1; i < filas.length; i++) {
-            if (!filas[i].trim()) continue;
-
-            const columnas = filas[i].split(',');
-
-            let linkImagen = columnas[4] ? columnas[4].trim() : "";
-
-            if (linkImagen.includes('drive.google.com/file/d/')) {
-                let idFoto = linkImagen.split('/d/')[1].split('/')[0];
-                linkImagen = `https://drive.google.com/thumbnail?id=${idFoto}`;
-            }
-
-            let promoCelda = columnas[7] ? columnas[7].trim().replace(/^"|"$/g, '') : "";
-
-            if (promoCelda && promoCelda.toLowerCase() !== "promociones") {
-                promocionesActivas.push(promoCelda);
-            }
-
-            if (columnas.length > 8 && textoChamuyo === "") {
-                let chamuyoCelda = columnas[8].trim().replace(/^"|"$/g, '');
-
-                if (chamuyoCelda && chamuyoCelda.toLowerCase() !== "chamuyo") {
-                    textoChamuyo = chamuyoCelda;
-                }
-            }
-
-            const producto = {
-                id: columnas[0].trim(),
-                nombre: columnas[1].trim(),
-                categoria_id: columnas[2].trim().toUpperCase(),
-                categoria_nombre:
-                    columnas[2].trim().charAt(0).toUpperCase() +
-                    columnas[2].trim().slice(1).toLowerCase(),
-                precio: parseFloat(columnas[3].trim()),
-                imagenBase: linkImagen,
-                imagenTarjeta: linkImagen + "&sz=w800",
-                imagenZoom: linkImagen + "&sz=w1600",
-                stock: columnas[5].trim().toUpperCase()
-            };
-
-            if (producto.stock === "SI" || producto.stock === "SÍ") {
-                productos.push(producto);
-            }
-        }
-
-        document.getElementById('loader').classList.add('hidden');
-
-        iniciarRotacionPromos();
-        mostrarIdentidadChamuyo();
-        dibujarFiltros();
-        dibujarTarjetas();
-
-    } catch (error) {
-        console.error("Error:", error);
-        document.getElementById('loader').innerText =
-            "Lo sentimos, hubo un inconveniente al cargar el catálogo.";
-    }
-}
-
-// --- IDENTIDAD PREMIUM ---
-function mostrarIdentidadChamuyo() {
-
-    const seccionIdentidad = document.getElementById('seccion-identidad');
-    const contenidoIdentidad = document.getElementById('texto-identidad-contenido');
-    const textoContenedor = document.getElementById('texto-identidad');
-    const btnToggle = document.getElementById('btn-toggle-identidad');
-    const fadeContenedor = document.getElementById('fade-identidad');
-
-    if (textoChamuyo) {
-
-        contenidoIdentidad.innerText = textoChamuyo;
-
-        seccionIdentidad.classList.remove('hidden');
-
-        setTimeout(() => {
-
-            if (textoContenedor.scrollHeight <= 120) {
-                btnToggle.classList.add('hidden');
-                fadeContenedor.classList.add('hidden');
-                textoContenedor.style.maxHeight = "none";
-            }
-
-        }, 100);
-    }
-}
-
-const btnToggleIdentidad = document.getElementById('btn-toggle-identidad');
-let identidadExpandida = false;
-
-if (btnToggleIdentidad) {
-
-    btnToggleIdentidad.addEventListener('click', () => {
-
-        const textoContenedor = document.getElementById('texto-identidad');
-        const fadeContenedor = document.getElementById('fade-identidad');
-        const iconoToggle = document.getElementById('icono-toggle-identidad');
-        const spanToggle = document.getElementById('span-toggle-identidad');
-
-        identidadExpandida = !identidadExpandida;
-
-        if (identidadExpandida) {
-
-            textoContenedor.style.maxHeight =
-                textoContenedor.scrollHeight + "px";
-
-            fadeContenedor.classList.add('opacity-0');
-            iconoToggle.classList.add('rotate-180');
-            spanToggle.innerText = "Ocultar historia";
-
-        } else {
-
-            textoContenedor.style.maxHeight = "110px";
-
-            fadeContenedor.classList.remove('opacity-0');
-            iconoToggle.classList.remove('rotate-180');
-            spanToggle.innerText = "✨ Leer nuestra historia completa";
-        }
-    });
-}
-
-// --- ROTACIÓN DE PROMOCIONES ---
-function iniciarRotacionPromos() {
-
-    const promosUnicas = [...new Set(promocionesActivas)];
-
-    const contenedor = document.getElementById('contenedor-promos');
-    const textoEl = document.getElementById('texto-promo');
-
-    if (promosUnicas.length === 0) {
-        contenedor.classList.add('hidden');
-        return;
-    }
-
-    contenedor.classList.remove('hidden');
-    textoEl.innerText = promosUnicas[0];
-
-    if (promosUnicas.length > 1) {
-
-        let indicePromo = 0;
-
-        setInterval(() => {
-
-            textoEl.style.opacity = 0;
-
-            setTimeout(() => {
-                indicePromo = (indicePromo + 1) % promosUnicas.length;
-                textoEl.innerText = promosUnicas[indicePromo];
-                textoEl.style.opacity = 1;
-            }, 300);
-
-        }, 10000);
-    }
-}
-
-// --- FILTROS ---
-function dibujarFiltros() {
-
-    const contenedor = document.getElementById('contenedor-filtros');
-    contenedor.innerHTML = '';
-
-    const categoriasMapa = new Map();
-
-    productos.forEach(p => {
-        if (!categoriasMapa.has(p.categoria_id)) {
-            categoriasMapa.set(p.categoria_id, p.categoria_nombre);
-        }
-    });
-
-    const categoriasUnicas = ['TODAS', ...Array.from(categoriasMapa.keys())];
-
-    categoriasUnicas.forEach(catId => {
-
-        const isActive = categoriaActual === catId;
-
-        const clasesBoton = isActive
-            ? "bg-dorado text-white border-dorado shadow-md font-medium"
-            : "bg-white text-nude-900 border-nude-100 hover:border-dorado hover:text-dorado hover:bg-nude-50 font-light";
-
-        const textoMostrar = catId === 'TODAS'
-            ? 'Ver Todo'
-            : categoriasMapa.get(catId);
-
-        contenedor.innerHTML += `
-            <button onclick="filtrarCategoria('${catId}')"
-                    class="whitespace-nowrap px-4 py-1.5 md:px-6 md:py-2 rounded-full border-2 shadow-sm text-xs md:text-base transition-all duration-300 ${clasesBoton}">
-                ${textoMostrar}
-            </button>
-        `;
-    });
-}
-
-function filtrarCategoria(catSeleccionada) {
-    categoriaActual = catSeleccionada;
-    dibujarFiltros();
-    dibujarTarjetas();
-}
-
-// --- BUSCADOR ---
-document.getElementById('input-buscador').addEventListener('input', (e) => {
-    busquedaActual = e.target.value.toLowerCase().trim();
-    dibujarTarjetas();
-});
-
-// --- TARJETAS ---
-function dibujarTarjetas() {
-
-    const contenedor = document.getElementById('grilla-productos');
-    contenedor.innerHTML = '';
-
-    const productosParaMostrar = productos.filter(p => {
-
-        const coincideCategoria =
-            categoriaActual === 'TODAS' ||
-            p.categoria_id === categoriaActual;
-
-        const nombreBuscado = p.nombre.toLowerCase();
-        const catBuscada = p.categoria_nombre.toLowerCase();
-
-        const coincideBusqueda =
-            nombreBuscado.includes(busquedaActual) ||
-            catBuscada.includes(busquedaActual);
-
-        return coincideCategoria && coincideBusqueda;
-    });
-
-    productosParaMostrar.forEach(prod => {
-
-        const precioArs = new Intl.NumberFormat('es-AR', {
-            style: 'currency',
-            currency: 'ARS',
-            maximumFractionDigits: 0
-        }).format(prod.precio);
-
-        contenedor.innerHTML += `
-            <div class="bg-white rounded-2xl shadow-premium border border-nude-100 overflow-hidden hover:shadow-premium-hover transition-all duration-300 flex flex-col">
-                <div class="overflow-hidden h-64 relative">
-                    <img src="${prod.imagenTarjeta}" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500">
-                </div>
-
-                <div class="p-5 flex flex-col gap-2 flex-1">
-                    <span class="text-xs uppercase tracking-widest text-dorado font-medium">
-                        ${prod.categoria_nombre}
-                    </span>
-
-                    <h3 class="text-xl font-serif text-nude-900 leading-snug">
-                        ${prod.nombre}
-                    </h3>
-
-                    <p class="text-3xl font-semibold text-nude-900 mt-auto">
-                        ${precioArs}
-                    </p>
-```
