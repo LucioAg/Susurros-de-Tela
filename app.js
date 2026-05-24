@@ -8,6 +8,7 @@ let carrito = [];
 let categoriaActual = 'TODAS'; 
 let busquedaActual = ''; 
 let promocionesActivas = [];
+let textoChamuyo = ""; // Variable para guardar la identidad de la marca
 
 // --- CARGA DE DATOS ---
 async function cargarProductos() {
@@ -20,17 +21,29 @@ async function cargarProductos() {
             if (!filas[i].trim()) continue;
             const columnas = filas[i].split(',');
             
+            // --- Carga de imágenes ---
             let linkImagen = columnas[4] ? columnas[4].trim() : ""; 
             if (linkImagen.includes('drive.google.com/file/d/')) {
                 let idFoto = linkImagen.split('/d/')[1].split('/')[0];
                 linkImagen = `https://drive.google.com/thumbnail?id=${idFoto}`;
             }
 
+            // --- Lectura de Promociones (Columna H -> Índice 7) ---
             let promoCelda = columnas[7] ? columnas[7].trim().replace(/^"|"$/g, '') : "";
             if (promoCelda && promoCelda.toLowerCase() !== "promociones") {
                 promocionesActivas.push(promoCelda);
             }
 
+            // --- Lectura de Identidad/Chamuyo (Columna I -> Índice 8) ---
+            // Solo guarda el primer texto válido que encuentre
+            if (columnas.length > 8 && textoChamuyo === "") {
+                let chamuyoCelda = columnas[8].trim().replace(/^"|"$/g, '');
+                if (chamuyoCelda && chamuyoCelda.toLowerCase() !== "chamuyo") {
+                    textoChamuyo = chamuyoCelda;
+                }
+            }
+
+            // --- Creación de producto ---
             const producto = {
                 id: columnas[0].trim(),
                 nombre: columnas[1].trim(),
@@ -49,7 +62,9 @@ async function cargarProductos() {
         }
         
         document.getElementById('loader').classList.add('hidden');
+        
         iniciarRotacionPromos();
+        mostrarIdentidadChamuyo(); // Llamamos a la función que muestra el texto
         dibujarFiltros();
         dibujarTarjetas();
 
@@ -57,6 +72,58 @@ async function cargarProductos() {
         console.error("Error:", error);
         document.getElementById('loader').innerText = "Lo sentimos, hubo un inconveniente al cargar el catálogo. Por favor, intente recargar la página.";
     }
+}
+
+// --- MOSTRAR IDENTIDAD (CHAMUYO) ---
+function mostrarIdentidadChamuyo() {
+    const seccionIdentidad = document.getElementById('seccion-identidad');
+    const contenidoIdentidad = document.getElementById('texto-identidad-contenido');
+    const textoContenedor = document.getElementById('texto-identidad');
+    const btnToggle = document.getElementById('btn-toggle-identidad');
+    const fadeContenedor = document.getElementById('fade-identidad');
+
+    // Si hay un texto en la columna I, lo mostramos
+    if (textoChamuyo) {
+        contenidoIdentidad.innerText = textoChamuyo;
+        seccionIdentidad.classList.remove('hidden');
+
+        // Un pequeño retraso para que el navegador calcule bien la altura del texto
+        setTimeout(() => {
+            // Si el texto es muy cortito (menos de 85px), ocultamos el botón de "Leer más" y el difuminado
+            if (textoContenedor.scrollHeight <= 85) {
+                btnToggle.classList.add('hidden');
+                fadeContenedor.classList.add('hidden');
+                textoContenedor.style.maxHeight = "none";
+            }
+        }, 100);
+    }
+}
+
+// Lógica de Expandir/Comprimir para el texto de identidad
+const btnToggleIdentidad = document.getElementById('btn-toggle-identidad');
+let identidadExpandida = false;
+
+if (btnToggleIdentidad) {
+    btnToggleIdentidad.addEventListener('click', () => {
+        const textoContenedor = document.getElementById('texto-identidad');
+        const fadeContenedor = document.getElementById('fade-identidad');
+        const iconoToggle = document.getElementById('icono-toggle-identidad');
+        const spanToggle = document.getElementById('span-toggle-identidad');
+
+        identidadExpandida = !identidadExpandida;
+        
+        if (identidadExpandida) {
+            textoContenedor.style.maxHeight = textoContenedor.scrollHeight + "px";
+            fadeContenedor.classList.add('opacity-0');
+            iconoToggle.classList.add('rotate-180');
+            spanToggle.innerText = "Ocultar";
+        } else {
+            textoContenedor.style.maxHeight = "80px";
+            fadeContenedor.classList.remove('opacity-0');
+            iconoToggle.classList.remove('rotate-180');
+            spanToggle.innerText = "Leer más";
+        }
+    });
 }
 
 // --- ROTACIÓN DE PROMOCIONES ---
@@ -133,8 +200,6 @@ document.getElementById('input-buscador').addEventListener('input', (e) => {
 // --- RENDERIZADO DE TARJETAS ---
 function obtenerBotonTarjetaHtml(idProducto) {
     let item = carrito.find(i => i.id === idProducto);
-    
-    // CORREGIDO: Botón mucho más bajo en móvil para ahorrar espacio (h-36px)
     const hClase = "h-[36px] md:h-[50px]";
 
     if (!item) {
@@ -176,11 +241,9 @@ function dibujarTarjetas() {
 
         const htmlTarjeta = `
             <div class="bg-white rounded-xl md:rounded-2xl shadow-sm md:shadow-premium border border-nude-100 overflow-hidden hover:shadow-md transition-all duration-300 flex flex-col">
-                
                 <div class="overflow-hidden h-40 md:h-64 lg:h-80 relative cursor-zoom-in" onclick='abrirModalImagen("${prod.imagenZoom}", ${JSON.stringify(prod.nombre)})'>
                     <img src="${prod.imagenTarjeta}" alt="${prod.nombre}" class="w-full h-full object-cover transition-transform duration-500 hover:scale-105" onerror="this.src='https://placehold.co/800x600/e1cfc2/e1cfc2/png'">
                 </div>
-                
                 <div class="p-3 md:p-6 flex flex-col flex-1 space-y-1 md:space-y-3">
                     <span class="text-[10px] md:text-sm font-medium uppercase text-dorado tracking-widest leading-none">${prod.categoria_nombre}</span>
                     <h3 class="text-sm md:text-xl font-serif text-nude-900 line-clamp-2 leading-tight md:leading-snug font-medium">${prod.nombre}</h3>
